@@ -67,8 +67,41 @@ if (is_admin()) {
 function cfts_admin_css() {
 	header('Content-type: text/css');
 	?>
-	.cfts-identifier {
-		font-weight:bold;
+	.cfts-select {
+		display: -moz-inline-box;
+		display: inline-block;
+		/**
+		 * @bugfix inline-block fix
+		 * @affected	IE6, IE7
+		 * @valid		no
+		 */
+		*zoom: 1;
+		*display: inline;
+		position: relative;
+		min-width: 90%;
+	}
+	.cfts-select .cfts-value {
+		border: 1px solid #dfdfdf;
+		-moz-border-radius: 4px; /* FF1+ */
+		-webkit-border-radius: 4px; /* Saf3+, Chrome */
+		-khtml-border-radius: 4px; /* Konqueror */
+		border-radius: 4px; /* Standard. IE9 */
+		display: block;
+		padding: 3px 6px;
+	}
+	.cfts-select .cfts-options {
+		background: #fff;
+		border: 1px solid #dfdfdf;
+		-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, .5); /* FF3.5+ */
+		-webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .5); /* Saf3+, Chrome */
+		box-shadow: 0 3px 5px rgba(0, 0, 0, .5); /* Standard. Opera 10.5, IE9 */
+		margin-top: -1px;
+		max-height: 400px;
+		min-width: 300px;
+		overflow: auto;
+		position: absolute;
+		right: 0;
+		z-index: 99;
 	}
 	<?php
 	die();
@@ -81,6 +114,13 @@ if (is_admin()) {
 
 ## Page Display Functionality
 
+/**
+ * Function to display individual items
+ */
+function _cfts_page_template_selector_item($title, $description, $image_url) {
+	
+}
+
 function cfts_page_template_selector() {
 	global $post;
 	$template_info = cfts_page_template_info();
@@ -89,7 +129,7 @@ function cfts_page_template_selector() {
 	$selected = $template_info[$post->page_template];
 	?>
 	<div id="cfts-page-template-selector-area" style="display:none;">
-		<div id="cfts-page-template-selector" class="cfts-page-template-selector">
+		<div id="cfts-page-template-selector" class="cfts-select">
 			<span id="cfts-selected" class="cfts-value">
 				<input type="radio" name="cfts-option-radio" id="cfts-option-radio-<?php echo $post->page_template; ?>" class="cfts-option-radio" checked="checked" />
 				<label for="cfts-option-radio-<?php echo $post->page_template; ?>">
@@ -98,10 +138,12 @@ function cfts_page_template_selector() {
 						echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot">';
 					}
 					if (!empty($selected['name'])) {
-						echo '<span id="cfts-selected-name" class="cfts-name"><span class="cfts-identifier">Name: </span>'.$selected['name'].'</span>';
+						echo '<span id="cfts-selected-name" class="cfts-name">'.$selected['name'].'</span>';
+					} else {
+						echo '<span id="cfts-selected-name" class="cfts-name">'.__('Select a Template', 'cfts').'</span>';
 					}
 					if (!empty($selected['description'])) {
-						echo '<span id="cfts-selected-description" class="cfts-description"><span class="cfts-identifier">Description: </span>'.$selected['description'].'</span>';
+						echo '<span id="cfts-selected-description" class="cfts-description">'.$selected['description'].'</span>';
 					}
 					?>
 				</label>
@@ -121,10 +163,10 @@ function cfts_page_template_selector() {
 								echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot">';
 							}
 							if (!empty($template['name'])) {
-								echo '<span id="cfts-option-name-'.$file.'" class="cfts-name"><span class="cfts-identifier">Name: </span>'.$template['name'].'</span>';
+								echo '<span id="cfts-option-name-'.$file.'" class="cfts-name">'.$template['name'].'</span>';
 							}
 							if (!empty($template['description'])) {
-								echo '<span id="cfts-option-description-'.$file.'" class="cfts-description"><span class="cfts-identifier">Description: </span>'.$template['description'].'</span>';
+								echo '<span id="cfts-option-description-'.$file.'" class="cfts-description">Description: </span>'.$template['description'].'</span>';
 							}
 							?>
 						</label>
