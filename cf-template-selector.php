@@ -153,8 +153,6 @@ function cfts_page_template_selector() {
 					}
 					if (!empty($selected['name'])) {
 						echo '<span id="cfts-selected-name" class="cfts-name">'.$selected['name'].'</span>';
-					} else {
-						echo '<span id="cfts-selected-name" class="cfts-name">'.__('Select a Template', 'cfts').'</span>';
 					}
 					if (!empty($selected['description'])) {
 						echo '<span id="cfts-selected-description" class="cfts-description">'.$selected['description'].'</span>';
