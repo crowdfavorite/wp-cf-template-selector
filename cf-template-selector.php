@@ -48,11 +48,29 @@ function cfts_admin_js() {
 	?>
 	;(function($) {
 		$(function() {
-			$(".cfts-option-radio").live('change', function() {
+			$(".cfts-option").live('click', function() {
 				var _this = $(this);
-				var id = _this.attr('id');
-				var file = $("#cfts-option-file-"+id.replace('cfts-option-radio-', '')).val();
+				var id = _this.attr('id').replace('cfts-option-', '');
+				var file = $("#cfts-option-file-"+id).val();
+				var screenshot = $("#cfts-option-screenshot-"+id).attr('src');
+				var name = $("#cfts-option-name-"+id).html();
+				var description = $("#cfts-option-description-"+id).html();
+
 				$("#page_template").val(file);
+				$("#cfts-selected-name").html(name);
+				if (screenshot != undefined) {
+					$("#cfts-selected-screenshot").show();
+					$("#cfts-selected-screenshot").attr('src', screenshot);
+				}
+				else {
+					$("#cfts-selected-screenshot").hide();
+				}
+				if (description != null) {
+					$("#cfts-selected-description").html(description);
+				}
+				else {
+					$("#cfts-selected-description").html('');
+				}
 			});
 		});
 	})(jQuery);
@@ -139,49 +157,49 @@ function cfts_page_template_selector() {
 	global $post;
 	$template_info = cfts_page_template_info();
 	if (!is_array($template_info) || empty($template_info)) { return; }
+	$selected_template = '';
 	
-	$selected = $template_info[$post->page_template];
+	if (!empty($post->page_template)) {
+		$selected_template = $post->page_template;
+	}
+	else {
+		$selected_template = 'default';
+	}
+	$selected = $template_info[$selected_template];
 	?>
 	<div id="cfts-page-template-selector-area" style="display:none;">
 		<div id="cfts-page-template-selector" class="cfts-select">
 			<span id="cfts-selected" class="cfts-value">
-				<input type="radio" name="cfts-option-radio" id="cfts-option-radio-<?php echo $post->page_template; ?>" class="cfts-option-radio" checked="checked" />
-				<label for="cfts-option-radio-<?php echo $post->page_template; ?>">
-					<?php
-					if (!empty($selected['screenshot'])) {
-						echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot">';
-					}
-					if (!empty($selected['name'])) {
-						echo '<span id="cfts-selected-name" class="cfts-name">'.$selected['name'].'</span>';
-					}
-					if (!empty($selected['description'])) {
-						echo '<span id="cfts-selected-description" class="cfts-description">'.$selected['description'].'</span>';
-					}
-					?>
-				</label>
+				<?php
+				if (!empty($selected['screenshot'])) {
+					echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot">';
+				}
+				if (!empty($selected['name'])) {
+					echo '<span id="cfts-selected-name" class="cfts-name">'.$selected['name'].'</span>';
+				}
+				if (!empty($selected['description'])) {
+					echo '<span id="cfts-selected-description" class="cfts-description">'.$selected['description'].'</span>';
+				}
+				?>
 			</span>
 			<ul class="cfts-options">
 				<?php 
 				foreach ($template_info as $filename => $template) { 
-					if ($filename == $post->page_template) { continue; }
 					$file = str_replace('.php', '', $filename);
 					?>
 					<li id="cfts-option-<?php echo $file; ?>" class="cfts-option">
-						<input type="radio" name="cfts-option-radio" id="cfts-option-radio-<?php echo $file; ?>" class="cfts-option-radio"<?php checked($filename, $post->page_template); ?> />
 						<input type="hidden" id="cfts-option-file-<?php echo $file; ?>" value="<?php echo $filename; ?>" />
-						<label for="cfts-option-radio-<?php echo $file; ?>">
-							<?php
-							if (!empty($template['screenshot'])) {
-								echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot">';
-							}
-							if (!empty($template['name'])) {
-								echo '<span id="cfts-option-name-'.$file.'" class="cfts-name">'.$template['name'].'</span>';
-							}
-							if (!empty($template['description'])) {
-								echo '<span id="cfts-option-description-'.$file.'" class="cfts-description">Description: </span>'.$template['description'].'</span>';
-							}
-							?>
-						</label>
+						<?php
+						if (!empty($template['screenshot'])) {
+							echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot">';
+						}
+						if (!empty($template['name'])) {
+							echo '<span id="cfts-option-name-'.$file.'" class="cfts-name">'.$template['name'].'</span>';
+						}
+						if (!empty($template['description'])) {
+							echo '<span id="cfts-option-description-'.$file.'" class="cfts-description">Description: </span>'.$template['description'].'</span>';
+						}
+						?>
 					</li>
 				<?php 
 				} 
