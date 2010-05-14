@@ -88,6 +88,19 @@ function cfts_admin_css() {
 		border-radius: 4px; /* Standard. IE9 */
 		display: block;
 		padding: 3px 6px;
+		position: relative;
+		z-index: 100;
+	}
+	.cfts-select:hover .cfts-value {
+		border-bottom-color: #fff;
+		-moz-border-radius-bottomleft: 0; /* FF1+ */
+		-webkit-border-bottom-left-radius: 0; /* Saf3+, Chrome */
+		-khtml-border-bottom-left-radius: 0; /* Konqueror */
+		border-bottom-left-radius: 0; /* Standard. IE9 */
+		-moz-border-radius-bottomright: 0; /* FF1+ */
+		-webkit-border-bottom-right-radius: 0; /* Saf3+, Chrome */
+		-khtml-border-bottom-right-radius: 0; /* Konqueror */
+		border-bottom-right-radius: 0; /* Standard. IE9 */
 	}
 	.cfts-select .cfts-options {
 		background: #fff;
@@ -99,6 +112,7 @@ function cfts_admin_css() {
 		max-height: 400px;
 		min-width: 300px;
 		overflow: auto;
+		padding: 3px 6px;
 		position: absolute;
 		right: 0;
 		z-index: 99;
