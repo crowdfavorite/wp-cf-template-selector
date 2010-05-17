@@ -237,7 +237,7 @@ function cfts_page_template_selector() {
 				}
 				?>
 			</div>
-			<div class="cfts-options">
+			<div class="cfts-options" style="display:none;">
 				<ul>
 					<?php 
 					foreach ($template_info as $filename => $template) { 
