@@ -74,6 +74,9 @@ function cfts_admin_js() {
 				else {
 					$("#cfts-selected-description").html('');
 				}
+				
+				$(".cfts-option").removeClass("cfts-selected");
+				_this.addClass("cfts-selected");
 			});
 		});
 	})(jQuery);
@@ -214,9 +217,13 @@ function cfts_page_template_selector() {
 				<ul>
 					<?php 
 					foreach ($template_info as $filename => $template) { 
+						$selected_class = '';
+						if ($selected_template == $filename) {
+							$selected_class = " cfts-selected";
+						}
 						$file = str_replace('.php', '', $filename);
 						?>
-						<li id="cfts-option-<?php echo $file; ?>" class="cfts-option">
+						<li id="cfts-option-<?php echo $file; ?>" class="cfts-option<?php echo $selected_class; ?>">
 							<input type="hidden" id="cfts-option-file-<?php echo $file; ?>" value="<?php echo $filename; ?>" />
 							<?php
 							if (!empty($template['screenshot'])) {
