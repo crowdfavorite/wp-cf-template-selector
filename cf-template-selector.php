@@ -13,6 +13,9 @@ Author URI: http://crowdfavorite.com
 ## Constants
 define('CFTS_VERSION', '1.0');
 define('CFTS_DIR', trailingslashit(realpath(dirname(__FILE__))));
+define('CFTS_DIR_NAME', apply_filters('cfts_dir_name', 'cf-template-selector'));
+// Used for CSS
+define('CFTS_URL', trailingslashit(content_url('/plugins/' . CFTS_DIR_NAME)) );
 
 if (!defined('PLUGINDIR')) {
 	define('PLUGINDIR','wp-content/plugins');
@@ -99,41 +102,65 @@ function cfts_admin_css() {
 		min-width: 90%;
 	}
 	.cfts-select .cfts-value {
+		background: #fff;
 		border: 1px solid #dfdfdf;
 		-moz-border-radius: 4px; /* FF1+ */
 		-webkit-border-radius: 4px; /* Saf3+, Chrome */
 		-khtml-border-radius: 4px; /* Konqueror */
 		border-radius: 4px; /* Standard. IE9 */
 		display: block;
-		padding: 3px 6px;
+		padding: 5px 6px;
 		position: relative;
 		z-index: 100;
 	}
-	.cfts-select:hover .cfts-value {
-		border-bottom-color: #fff;
-		-moz-border-radius-bottomleft: 0; /* FF1+ */
-		-webkit-border-bottom-left-radius: 0; /* Saf3+, Chrome */
-		-khtml-border-bottom-left-radius: 0; /* Konqueror */
-		border-bottom-left-radius: 0; /* Standard. IE9 */
-		-moz-border-radius-bottomright: 0; /* FF1+ */
-		-webkit-border-bottom-right-radius: 0; /* Saf3+, Chrome */
-		-khtml-border-bottom-right-radius: 0; /* Konqueror */
-		border-bottom-right-radius: 0; /* Standard. IE9 */
-	}
 	.cfts-select .cfts-options {
-		background: #fff;
-		border: 1px solid #dfdfdf;
-		-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, .5); /* FF3.5+ */
-		-webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .5); /* Saf3+, Chrome */
-		box-shadow: 0 3px 5px rgba(0, 0, 0, .5); /* Standard. Opera 10.5, IE9 */
-		margin-top: -1px;
-		max-height: 400px;
-		min-width: 300px;
-		overflow: auto;
-		padding: 3px 6px;
+		background: url(<?php echo CFTS_URL; ?>img/bubble-tick.png) no-repeat right center;
+		left: -304px;
+		overflow: hidden;
+		padding: 4px 12px 4px 4px;
 		position: absolute;
-		right: 0;
-		z-index: 99;
+		top: -189px;
+		z-index: 101;
+	}
+	.cfts-select .cfts-options ul {
+		background: #fff;
+		height: 386px;
+		margin: 3px;
+		overflow: auto;
+		width: 290px;
+	}
+	.cfts-select .cfts-option {
+		border-bottom: 1px solid #ddd;
+		cursor: pointer;
+		margin: 0;
+		height: 108px;
+		padding: 6px 6px 6px 126px;
+		position: relative;
+	}
+	.cfts-select .cfts-option:hover {
+		background: #eaf2fa;
+	}
+	.cfts-select .cfts-option .cfts-screenshot {
+		border-right: 1px solid #ddd;
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+	.cfts-select .cfts-option .cfts-name {
+		font-weight: bold;
+	}
+	.cfts-select .cfts-option .cfts-description {
+		color: #777;
+		font-size: 11px;
+	}
+	.cfts-fade-bottom {
+		background: url(<?php echo CFTS_URL; ?>img/fade-bottom.png) repeat-x;
+		bottom: 0;
+		margin: 3px 3px 7px 3px;
+		position: absolute;
+		height: 20px;
+		width: 276px;
+		z-index: 102;
 	}
 	<?php
 	die();
@@ -182,29 +209,32 @@ function cfts_page_template_selector() {
 				}
 				?>
 			</span>
-			<ul class="cfts-options">
-				<?php 
-				foreach ($template_info as $filename => $template) { 
-					$file = str_replace('.php', '', $filename);
-					?>
-					<li id="cfts-option-<?php echo $file; ?>" class="cfts-option">
-						<input type="hidden" id="cfts-option-file-<?php echo $file; ?>" value="<?php echo $filename; ?>" />
-						<?php
-						if (!empty($template['screenshot'])) {
-							echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot">';
-						}
-						if (!empty($template['name'])) {
-							echo '<span id="cfts-option-name-'.$file.'" class="cfts-name">'.$template['name'].'</span>';
-						}
-						if (!empty($template['description'])) {
-							echo '<span id="cfts-option-description-'.$file.'" class="cfts-description">Description: </span>'.$template['description'].'</span>';
-						}
+			<div class="cfts-options">
+				<ul>
+					<?php 
+					foreach ($template_info as $filename => $template) { 
+						$file = str_replace('.php', '', $filename);
 						?>
-					</li>
-				<?php 
-				} 
-				?>
-			</ul>
+						<li id="cfts-option-<?php echo $file; ?>" class="cfts-option">
+							<input type="hidden" id="cfts-option-file-<?php echo $file; ?>" value="<?php echo $filename; ?>" />
+							<?php
+							if (!empty($template['screenshot'])) {
+								echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot">';
+							}
+							if (!empty($template['name'])) {
+								echo '<strong id="cfts-option-name-'.$file.'" class="cfts-name">'.$template['name'].'</strong>';
+							}
+							if (!empty($template['description'])) {
+								echo '<div id="cfts-option-description-'.$file.'" class="cfts-description">'.$template['description'].'</div>';
+							}
+							?>
+						</li>
+					<?php 
+					} 
+					?>
+				</ul>
+				<div class="cfts-fade-bottom"></div>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
