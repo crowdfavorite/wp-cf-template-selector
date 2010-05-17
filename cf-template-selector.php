@@ -50,8 +50,25 @@ function cfts_admin_js() {
 	header('Content-type: text/javascript');
 	?>
 	;(function($) {
+		var _togglePopover = function() {
+			var $popover = $(".cfts-select .cfts-options");
+			var $popoverVisible = $(".cfts-select .cfts-options:visible");
+			
+			if ($popoverVisible.length > 0) {
+				// Hide if visible
+				$popover.fadeOut('fast');
+			} else {
+				// Show if hidden
+				$popover.fadeIn('fast');
+			}
+		}
+		
 		$(function() {
-			$(".cfts-option").live('click', function() {
+			$(".cfts-select .cfts-value").click(function(){
+				_togglePopover();
+			});
+			
+			$(".cfts-select .cfts-option").live('click', function() {
 				var _this = $(this);
 				var id = _this.attr('id').replace('cfts-option-', '');
 				var file = $("#cfts-option-file-"+id).val();
@@ -77,6 +94,7 @@ function cfts_admin_js() {
 				
 				$(".cfts-option").removeClass("cfts-selected");
 				_this.addClass("cfts-selected");
+				_togglePopover();
 			});
 		});
 	})(jQuery);
@@ -92,17 +110,8 @@ function cfts_admin_css() {
 	header('Content-type: text/css');
 	?>
 	.cfts-select {
-		display: -moz-inline-box;
-		display: inline-block;
-		/**
-		 * @bugfix inline-block fix
-		 * @affected	IE6, IE7
-		 * @valid		no
-		 */
-		*zoom: 1;
-		*display: inline;
+		display: block;
 		position: relative;
-		min-width: 90%;
 	}
 	.cfts-select .cfts-value {
 		background: #fff;
@@ -111,10 +120,14 @@ function cfts_admin_css() {
 		-webkit-border-radius: 4px; /* Saf3+, Chrome */
 		-khtml-border-radius: 4px; /* Konqueror */
 		border-radius: 4px; /* Standard. IE9 */
+		cursor: pointer;
 		display: block;
-		padding: 5px 6px;
-		position: relative;
+		overflow: hidden;
+		padding: 6px 28px 6px 6px;
 		z-index: 100;
+	}
+	.cfts-select .cfts-value:hover {
+		background: url(<?php echo CFTS_URL; ?>img/pencil.png) no-repeat right top;
 	}
 	.cfts-select .cfts-options {
 		background: url(<?php echo CFTS_URL; ?>img/bubble-tick.png) no-repeat right center;
@@ -129,42 +142,44 @@ function cfts_admin_css() {
 	}
 	.cfts-select .cfts-options ul {
 		background: #fff;
-		height: 386px;
+		border: 1px solid #ddd;
+		-moz-border-radius: 5px; /* FF1+ */
+		-webkit-border-radius: 5px; /* Saf3+, Chrome */
+		-khtml-border-radius: 5px; /* Konqueror */
+		border-radius: 5px; /* Standard. IE9 */
+		height: 384px;
 		overflow: auto;
 	}
 	.cfts-select .cfts-option {
 		border-bottom: 1px solid #ddd;
 		cursor: pointer;
 		margin: 0;
-		height: 108px;
-		padding: 6px;
+		overflow: hidden;
+		padding: 6px 24px 6px 6px;
 		position: relative;
 	}
-	.cfts-select .cfts-option:hover {
-		background: #eaf2fa;
+	.cfts-select .cfts-option.cfts-selected {
+		background: #f9f9f9 url(<?php echo CFTS_URL; ?>img/check.png) no-repeat right center;
 	}
-	.cfts-select .cfts-option img.cfts-screenshot {
-		border-right: 1px solid #ddd;
+	.cfts-select .cfts-option:hover {
+		background-color: #eaf2fa;
+	}
+	.cfts-select img.cfts-screenshot {
+		border: 1px solid #ddd;
 		float: left;
 		height: 120px;
-		margin: -6px 6px 0 -6px;
+		margin: 0 6px 0 0;
 		width: 120px;
 	}
-	.cfts-select .cfts-option .cfts-name {
+	.cfts-select .cfts-name {
 		font-weight: bold;
+		font-size: 12px;
+		line-height: 1.5 !important;
 	}
-	.cfts-select .cfts-option .cfts-description {
+	.cfts-select .cfts-description {
 		color: #777;
 		font-size: 11px;
-	}
-	.cfts-fade-bottom {
-		background: url(<?php echo CFTS_URL; ?>img/fade-bottom.png) repeat-x;
-		bottom: 0;
-		margin: 3px 3px 7px 0;
-		position: absolute;
-		height: 20px;
-		width: 276px;
-		z-index: 102;
+		line-height: 1.5 !important;
 	}
 	<?php
 	die();
@@ -200,7 +215,7 @@ function cfts_page_template_selector() {
 	?>
 	<div id="cfts-page-template-selector-area" style="display:none;">
 		<div id="cfts-page-template-selector" class="cfts-select">
-			<span id="cfts-selected" class="cfts-value">
+			<div id="cfts-selected" class="cfts-value">
 				<?php
 				if (!empty($selected['screenshot'])) {
 					echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot" />';
@@ -209,19 +224,19 @@ function cfts_page_template_selector() {
 					echo '<img src="'.CFTS_URL.'img/default.png" id="cfts-selected-screenshot" class="cfts-screenshot" style="display:none;" />';
 				}
 				if (!empty($selected['name'])) {
-					echo '<span id="cfts-selected-name" class="cfts-name">'.$selected['name'].'</span>';
+					echo '<strong id="cfts-selected-name" class="cfts-name">'.$selected['name'].'</strong>';
 				}
 				else {
-					echo '<span id="cfts-selected-name" class="cfts-name"></span>';
+					echo '<strong id="cfts-selected-name" class="cfts-name"></strong>';
 				}
 				if (!empty($selected['description'])) {
-					echo '<span id="cfts-selected-description" class="cfts-description">'.$selected['description'].'</span>';
+					echo '<div id="cfts-selected-description" class="cfts-description">'.$selected['description'].'</div>';
 				}
 				else {
-					echo '<span id="cfts-selected-description" class="cfts-description"></span>';
+					echo '<div id="cfts-selected-description" class="cfts-description"></div>';
 				}
 				?>
-			</span>
+			</div>
 			<div class="cfts-options">
 				<ul>
 					<?php 
@@ -250,7 +265,6 @@ function cfts_page_template_selector() {
 					} 
 					?>
 				</ul>
-				<div class="cfts-fade-bottom"></div>
 			</div>
 		</div>
 	</div>
