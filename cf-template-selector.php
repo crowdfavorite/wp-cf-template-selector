@@ -116,10 +116,11 @@ function cfts_admin_css() {
 	.cfts-select .cfts-options {
 		background: url(<?php echo CFTS_URL; ?>img/bubble-tick.png) no-repeat right center;
 		left: -304px;
+		margin-top: -200px;
 		overflow: hidden;
 		padding: 4px 12px 4px 4px;
 		position: absolute;
-		top: -189px;
+		top: 50%;
 		z-index: 101;
 	}
 	.cfts-select .cfts-options ul {
