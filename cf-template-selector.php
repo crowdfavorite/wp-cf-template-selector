@@ -121,34 +121,34 @@ function cfts_admin_css() {
 		left: -304px;
 		margin-top: -200px;
 		overflow: hidden;
-		padding: 4px 12px 4px 4px;
+		padding: 8px 15px 8px 8px;
 		position: absolute;
 		top: 50%;
+		width: 290px;
 		z-index: 101;
 	}
 	.cfts-select .cfts-options ul {
 		background: #fff;
 		height: 386px;
-		margin: 3px;
 		overflow: auto;
-		width: 290px;
 	}
 	.cfts-select .cfts-option {
 		border-bottom: 1px solid #ddd;
 		cursor: pointer;
 		margin: 0;
 		height: 108px;
-		padding: 6px 6px 6px 126px;
+		padding: 6px;
 		position: relative;
 	}
 	.cfts-select .cfts-option:hover {
 		background: #eaf2fa;
 	}
-	.cfts-select .cfts-option .cfts-screenshot {
+	.cfts-select .cfts-option img.cfts-screenshot {
 		border-right: 1px solid #ddd;
-		left: 0;
-		position: absolute;
-		top: 0;
+		float: left;
+		height: 120px;
+		margin: -6px 6px 0 -6px;
+		width: 120px;
 	}
 	.cfts-select .cfts-option .cfts-name {
 		font-weight: bold;
@@ -160,7 +160,7 @@ function cfts_admin_css() {
 	.cfts-fade-bottom {
 		background: url(<?php echo CFTS_URL; ?>img/fade-bottom.png) repeat-x;
 		bottom: 0;
-		margin: 3px 3px 7px 3px;
+		margin: 3px 3px 7px 0;
 		position: absolute;
 		height: 20px;
 		width: 276px;
