@@ -203,13 +203,22 @@ function cfts_page_template_selector() {
 			<span id="cfts-selected" class="cfts-value">
 				<?php
 				if (!empty($selected['screenshot'])) {
-					echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot">';
+					echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot" />';
+				}
+				else {
+					echo '<img src="'.CFTS_URL.'img/default.png" id="cfts-selected-screenshot" class="cfts-screenshot" style="display:none;" />';
 				}
 				if (!empty($selected['name'])) {
 					echo '<span id="cfts-selected-name" class="cfts-name">'.$selected['name'].'</span>';
 				}
+				else {
+					echo '<span id="cfts-selected-name" class="cfts-name"></span>';
+				}
 				if (!empty($selected['description'])) {
 					echo '<span id="cfts-selected-description" class="cfts-description">'.$selected['description'].'</span>';
+				}
+				else {
+					echo '<span id="cfts-selected-description" class="cfts-description"></span>';
 				}
 				?>
 			</span>
