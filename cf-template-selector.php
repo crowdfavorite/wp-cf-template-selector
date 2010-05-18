@@ -56,12 +56,22 @@ function cfts_admin_js() {
 		};
 		_popover.align = function() {
 			var $popover = $(_popover.settings.selector);
-			var offsetY = $popover.outerHeight() / 2;
 			var offsetX = $popover.outerWidth() - 9;
-			$popover.css({
-				"margin-top": "-" + offsetY + "px",
-				"margin-left": "-" + offsetX + "px"
-			});
+			var offsetY = $popover.outerHeight() / 2;		
+			
+			if ($popover.parents("#post-body").length > 0) {
+				cssToSet = {
+					"margin-top": "-" + offsetY + "px",
+					"margin-right": "-" + offsetX + "px"
+				};
+			} else {
+				cssToSet = {
+					"margin-top": "-" + offsetY + "px",
+					"margin-left": "-" + offsetX + "px"
+				};
+			}
+			
+			$popover.css(cssToSet);
 		}
 		_popover.toggle = function(closeAlways) {
 			var $popover = $(_popover.settings.selector);
@@ -141,6 +151,7 @@ function cfts_admin_css() {
 	
 	.cfts-select {
 		display: block;
+		max-width: 266px;
 		position: relative;
 		z-index: 100;
 	}
@@ -158,7 +169,6 @@ function cfts_admin_css() {
 		font-size: 12px;
 		font-weight: bold;
 		line-height: 1;
-		margin: -4px -4px 4px;
 		padding: 7px 9px;
 		position: relative;
 		text-shadow: 0 1px 0 rgb(255, 255, 255);
@@ -182,39 +192,46 @@ function cfts_admin_css() {
 	}
 	.cfts-select .cfts-options {
 		left: 0;
-		padding: 12px 0 12px 12px;
+		padding: 12px 0 12px;
 		position: absolute;
 		top: 50%;
-		width: 614px;
+		width: 624px;
 		z-index: 101;
+	}
+	/**
+	 * If in main column...
+	 */
+	#post-body .cfts-select .cfts-options {
+		left: auto;
+		right: 0;
 	}
 	/* Logic for widths depending on presence of scrollbar, etc */
 	.cfts-select .cfts-options.has-1 {
-		width: 210px;
+		width: 220px;
 	}
 	.cfts-select .cfts-options.has-2 {
-		width: 402px;
+		width: 412px;
 	}
 	.cfts-select .cfts-options.has-3,
 	.cfts-select .cfts-options.has-4,
 	.cfts-select .cfts-options.has-5,
 	.cfts-select .cfts-options.has-6 {
-		width: 594px;
+		width: 604px;
 	}
+	
 	/* Popover roundies */
 	.cfts-select .cfts-options-inside,
+	.cfts-select .cfts-options-inside-1,
 	.cfts-select .cfts-options .cfts-round-1,
 	.cfts-select .cfts-options .cfts-round-2,
 	.cfts-select .cfts-options .cfts-round-3,
-	.cfts-select .cfts-options .cfts-round-4,
-	.cfts-select .cfts-options .cfts-round-5 {
+	.cfts-select .cfts-options .cfts-round-4 {
 		background: url(<?php echo CFTS_URL; ?>img/popover.png) no-repeat 0 0;
 	}
 	.cfts-select .cfts-options .cfts-round-1,
 	.cfts-select .cfts-options .cfts-round-2,
 	.cfts-select .cfts-options .cfts-round-3,
-	.cfts-select .cfts-options .cfts-round-4,
-	.cfts-select .cfts-options .cfts-round-5 {
+	.cfts-select .cfts-options .cfts-round-4 {
 		position: absolute;
 	}
 	.cfts-select .cfts-options .cfts-round-1,
@@ -254,17 +271,19 @@ function cfts_admin_css() {
 		background-position: right bottom;
 		right: 0;
 	}
-	.cfts-select .cfts-options .cfts-round-5 {
-		background-position: 0 center;
-		bottom: 12px;
-		left: 0;
-		top: 12px;
-		width: 12px;
-	}
+	
+	/**
+	 * Inside (sides)
+	 */
 	.cfts-select .cfts-options-inside {
 		background-position: right center;
 		padding-right: 16px;
 	}
+	.cfts-select .cfts-options-inside-1 {
+		background-position: left center;
+		padding-left: 12px;
+	}
+
 	.cfts-select .cfts-options ul {
 		background: #fff;
 		max-height: 384px;
@@ -392,44 +411,45 @@ function cfts_page_template_selector() {
 					break;
 			}
 			 ?>
-			<div class="cfts-options<?php echo $gallery_classname; ?>" style="display: none;">
+			<div class="cfts-options<?php echo $gallery_classname; ?>">
 				<div class="cfts-options-inside">
-					<strong class="cfts-hndl">Page Templates</strong>
-					<ul>
-						<?php
+					<div class="cfts-options-inside-1">
+						<strong class="cfts-hndl">Page Templates</strong>
+						<ul>
+							<?php
 						
-						// Output items
-						foreach ($template_info as $filename => $template) { 
-							$selected_class = '';
-							if ($selected_template == $filename) {
-								$selected_class = " cfts-selected";
-							}
-							$file = str_replace('.php', '', $filename);
-							?><li id="cfts-option-<?php echo $file; ?>" class="cfts-option<?php echo $selected_class; ?>">
-								<input type="hidden" id="cfts-option-file-<?php echo $file; ?>" value="<?php echo $filename; ?>" />
-								<?php
-								if (!empty($template['screenshot'])) {
-									echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot" />';
-								} else {
-									echo '<img src="'.CFTS_URL.'img/default.png" class="cfts-screenshot" />';
+							// Output items
+							foreach ($template_info as $filename => $template) { 
+								$selected_class = '';
+								if ($selected_template == $filename) {
+									$selected_class = " cfts-selected";
 								}
-								if (!empty($template['name'])) {
-									echo '<strong id="cfts-option-name-'.$file.'" class="cfts-name">'.$template['name'].'</strong>';
-								}
-								if (!empty($template['description'])) {
-									echo '<div id="cfts-option-description-'.$file.'" class="cfts-description">'.$template['description'].'</div>';
-								}
-								?>
-							</li><?php 
-						} 
-						?>
-					</ul>
-				</div>
+								$file = str_replace('.php', '', $filename);
+								?><li id="cfts-option-<?php echo $file; ?>" class="cfts-option<?php echo $selected_class; ?>">
+									<input type="hidden" id="cfts-option-file-<?php echo $file; ?>" value="<?php echo $filename; ?>" />
+									<?php
+									if (!empty($template['screenshot'])) {
+										echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot" />';
+									} else {
+										echo '<img src="'.CFTS_URL.'img/default.png" class="cfts-screenshot" />';
+									}
+									if (!empty($template['name'])) {
+										echo '<strong id="cfts-option-name-'.$file.'" class="cfts-name">'.$template['name'].'</strong>';
+									}
+									if (!empty($template['description'])) {
+										echo '<div id="cfts-option-description-'.$file.'" class="cfts-description">'.$template['description'].'</div>';
+									}
+									?>
+								</li><?php 
+							} 
+							?>
+						</ul>
+					</div><!--/cfts-inside-1-->
+				</div><!--/cfts-inside-->
 				<div class="cfts-round-1"></div>
 				<div class="cfts-round-2"></div>
 				<div class="cfts-round-3"></div>
 				<div class="cfts-round-4"></div>
-				<div class="cfts-round-5"></div>
 			</div><!--/cfts-options-->
 		</div><!--/cfts-select-->
 	</div>
