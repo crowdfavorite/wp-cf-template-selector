@@ -150,12 +150,20 @@ function cfts_admin_css() {
 		width: 614px;
 		z-index: 101;
 	}
+	/* Logic for widths depending on presence of scrollbar, etc */
 	.cfts-select .cfts-options.has-1 {
-		width: 230px;
+		width: 210px;
 	}
 	.cfts-select .cfts-options.has-2 {
-		width: 422px;
+		width: 402px;
 	}
+	.cfts-select .cfts-options.has-3,
+	.cfts-select .cfts-options.has-4,
+	.cfts-select .cfts-options.has-5,
+	.cfts-select .cfts-options.has-6 {
+		width: 594px;
+	}
+	/* Popover roundies */
 	.cfts-select .cfts-options-inside,
 	.cfts-select .cfts-options .cfts-round-1,
 	.cfts-select .cfts-options .cfts-round-2,
@@ -335,6 +343,10 @@ function cfts_page_template_selector() {
 			switch ($num_of_items) {
 				case 1:
 				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
 					$gallery_classname = ' has-' . $num_of_items;
 					break;
 				default:
