@@ -50,8 +50,21 @@ function cfts_admin_js() {
 	header('Content-type: text/javascript');
 	?>
 	;(function($) {
-		var _togglePopover = function() {
-			var $popover = $(".cfts-select .cfts-options");
+		var _popover = {};
+		_popover.settings = {
+			selector: ".cfts-select .cfts-options"
+		};
+		_popover.align = function() {
+			var $popover = $(_popover.settings.selector);
+			var offsetY = $popover.outerHeight() / 2;
+			var offsetX = $popover.outerWidth() - 9;
+			$popover.css({
+				"margin-top": "-" + offsetY + "px",
+				"margin-left": "-" + offsetX + "px"
+			});
+		}
+		_popover.toggle = function() {
+			var $popover = $(_popover.settings.selector);
 			var $popoverVisible = $(".cfts-select .cfts-options:visible");
 			
 			if ($popoverVisible.length > 0) {
@@ -65,8 +78,10 @@ function cfts_admin_js() {
 		
 		$(function() {
 			$(".cfts-select .cfts-value").click(function(){
-				_togglePopover();
+				_popover.toggle();
 			});
+			
+			_popover.align();
 			
 			$(".cfts-select .cfts-option").live('click', function() {
 				var _this = $(this);
@@ -94,7 +109,7 @@ function cfts_admin_js() {
 				
 				$(".cfts-option").removeClass("cfts-selected");
 				_this.addClass("cfts-selected");
-				_togglePopover();
+				_popover.toggle();
 			});
 		});
 	})(jQuery);
@@ -112,9 +127,10 @@ function cfts_admin_css() {
 	.cfts-select {
 		display: block;
 		position: relative;
+		z-index: 100;
 	}
 	.cfts-select .cfts-value {
-		background: #fff;
+		background: #fff url(<?php echo CFTS_URL; ?>img/pencil.png) no-repeat right top;
 		border: 1px solid #dfdfdf;
 		-moz-border-radius: 4px; /* FF1+ */
 		-webkit-border-radius: 4px; /* Saf3+, Chrome */
@@ -126,60 +142,130 @@ function cfts_admin_css() {
 		padding: 6px 28px 6px 6px;
 		z-index: 100;
 	}
-	.cfts-select .cfts-value:hover {
-		background: url(<?php echo CFTS_URL; ?>img/pencil.png) no-repeat right top;
-	}
 	.cfts-select .cfts-options {
-		background: url(<?php echo CFTS_URL; ?>img/bubble-tick.png) no-repeat right center;
-		left: -304px;
-		margin-top: -200px;
-		overflow: hidden;
-		padding: 8px 15px 8px 8px;
+		left: 0;
+		padding: 12px 0 12px 12px;
 		position: absolute;
-		top: 50%;
-		width: 290px;
+		top: 50.0%;
+		width: 615px;
 		z-index: 101;
+	}
+	.cfts-select .cfts-options-inside,
+	.cfts-select .cfts-options .cfts-round-1,
+	.cfts-select .cfts-options .cfts-round-2,
+	.cfts-select .cfts-options .cfts-round-3,
+	.cfts-select .cfts-options .cfts-round-4,
+	.cfts-select .cfts-options .cfts-round-5 {
+		background: url(<?php echo CFTS_URL; ?>img/popover.png) no-repeat 0 0;
+	}
+	.cfts-select .cfts-options .cfts-round-1,
+	.cfts-select .cfts-options .cfts-round-2,
+	.cfts-select .cfts-options .cfts-round-3,
+	.cfts-select .cfts-options .cfts-round-4,
+	.cfts-select .cfts-options .cfts-round-5 {
+		position: absolute;
+	}
+	.cfts-select .cfts-options .cfts-round-1,
+	.cfts-select .cfts-options .cfts-round-2,
+	.cfts-select .cfts-options .cfts-round-3,
+	.cfts-select .cfts-options .cfts-round-4 {
+		height: 12px;
+		width: 50%;	
+	}
+	/**
+	 * Top
+	 */
+	.cfts-select .cfts-options .cfts-round-1,
+	.cfts-select .cfts-options .cfts-round-2 {
+		top: 0;
+	}
+	.cfts-select .cfts-options .cfts-round-1 {
+		background-position: 0 0;
+		left: 0;
+	}
+	.cfts-select .cfts-options .cfts-round-2 {
+		background-position: right 0;
+		right: 0;
+	}
+	/**
+	 * Bottom
+	 */
+	.cfts-select .cfts-options .cfts-round-3,
+	.cfts-select .cfts-options .cfts-round-4 {
+		bottom: 0;
+	}
+	.cfts-select .cfts-options .cfts-round-3 {
+		background-position: 0 bottom;
+		left: 0;
+	}
+	.cfts-select .cfts-options .cfts-round-4 {
+		background-position: right bottom;
+		right: 0;
+	}
+	.cfts-select .cfts-options .cfts-round-5 {
+		background-position: 0 center;
+		bottom: 12px;
+		left: 0;
+		top: 12px;
+		width: 12px;
+	}
+	.cfts-select .cfts-options-inside {
+		background-position: right center;
+		padding-right: 18px;
 	}
 	.cfts-select .cfts-options ul {
 		background: #fff;
-		border: 1px solid #ddd;
-		-moz-border-radius: 5px; /* FF1+ */
-		-webkit-border-radius: 5px; /* Saf3+, Chrome */
-		-khtml-border-radius: 5px; /* Konqueror */
-		border-radius: 5px; /* Standard. IE9 */
-		height: 384px;
+		max-height: 384px;
 		overflow: auto;
 	}
 	.cfts-select .cfts-option {
-		border-bottom: 1px solid #ddd;
+		-moz-border-radius: 4px; /* FF1+ */
+		-webkit-border-radius: 4px; /* Saf3+, Chrome */
+		-khtml-border-radius: 4px; /* Konqueror */
+		border-radius: 4px; /* Standard. IE9 */
 		cursor: pointer;
+		display: -moz-inline-box; /* FF2 */
+		display: inline-block; /* Standard. IE8+, Saf, FF3+ */
+		/**
+		 * @bugfix inline-block fix
+		 * @see http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/
+		 * @affected IE6, IE7
+		 * @valid no
+		 */
+		zoom: 1;
+		*display: inline;
+
 		margin: 0;
 		overflow: hidden;
-		padding: 6px 24px 6px 6px;
-		position: relative;
+		padding: 5px;
+		vertical-align: top;
+		width: 182px;
 	}
 	.cfts-select .cfts-option.cfts-selected {
-		background: #f9f9f9 url(<?php echo CFTS_URL; ?>img/check.png) no-repeat right center;
-	}
-	.cfts-select .cfts-option:hover {
-		background-color: #eaf2fa;
+		background: #eaf2fa;
 	}
 	.cfts-select img.cfts-screenshot {
 		border: 1px solid #ddd;
 		float: left;
 		height: 120px;
-		margin: 0 6px 0 0;
-		width: 120px;
+		margin: 0 0 5px;
+		width: 180px;
+	}
+	.cfts-select .cfts-option:hover img.cfts-screenshot {
+		border-color: #56A7E5;
 	}
 	.cfts-select .cfts-name {
+		display: block;
 		font-weight: bold;
 		font-size: 12px;
-		line-height: 1.5 !important;
+		line-height: 14px !important;
+		margin: 0 3px 2px;
 	}
 	.cfts-select .cfts-description {
 		color: #777;
 		font-size: 11px;
-		line-height: 1.5 !important;
+		line-height: 14px !important;
+		margin: 0 3px;
 	}
 	<?php
 	die();
@@ -221,7 +307,7 @@ function cfts_page_template_selector() {
 					echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot" />';
 				}
 				else {
-					echo '<img src="'.CFTS_URL.'img/default.png" id="cfts-selected-screenshot" class="cfts-screenshot" style="display:none;" />';
+					echo '<img src="'.CFTS_URL.'img/default.png" id="cfts-selected-screenshot" class="cfts-screenshot" />';
 				}
 				if (!empty($selected['name'])) {
 					echo '<strong id="cfts-selected-name" class="cfts-name">'.$selected['name'].'</strong>';
@@ -237,36 +323,43 @@ function cfts_page_template_selector() {
 				}
 				?>
 			</div>
-			<div class="cfts-options" style="display:none;">
-				<ul>
-					<?php 
-					foreach ($template_info as $filename => $template) { 
-						$selected_class = '';
-						if ($selected_template == $filename) {
-							$selected_class = " cfts-selected";
-						}
-						$file = str_replace('.php', '', $filename);
+			<div class="cfts-options">
+				<div class="cfts-options-inside">
+					<ul>
+						<?php 
+						foreach ($template_info as $filename => $template) { 
+							$selected_class = '';
+							if ($selected_template == $filename) {
+								$selected_class = " cfts-selected";
+							}
+							$file = str_replace('.php', '', $filename);
+							?><li id="cfts-option-<?php echo $file; ?>" class="cfts-option<?php echo $selected_class; ?>">
+								<input type="hidden" id="cfts-option-file-<?php echo $file; ?>" value="<?php echo $filename; ?>" />
+								<?php
+								if (!empty($template['screenshot'])) {
+									echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot" />';
+								} else {
+									echo '<img src="'.CFTS_URL.'img/default.png" class="cfts-screenshot" />';
+								}
+								if (!empty($template['name'])) {
+									echo '<strong id="cfts-option-name-'.$file.'" class="cfts-name">'.$template['name'].'</strong>';
+								}
+								if (!empty($template['description'])) {
+									echo '<div id="cfts-option-description-'.$file.'" class="cfts-description">'.$template['description'].'</div>';
+								}
+								?>
+							</li><?php 
+						} 
 						?>
-						<li id="cfts-option-<?php echo $file; ?>" class="cfts-option<?php echo $selected_class; ?>">
-							<input type="hidden" id="cfts-option-file-<?php echo $file; ?>" value="<?php echo $filename; ?>" />
-							<?php
-							if (!empty($template['screenshot'])) {
-								echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot">';
-							}
-							if (!empty($template['name'])) {
-								echo '<strong id="cfts-option-name-'.$file.'" class="cfts-name">'.$template['name'].'</strong>';
-							}
-							if (!empty($template['description'])) {
-								echo '<div id="cfts-option-description-'.$file.'" class="cfts-description">'.$template['description'].'</div>';
-							}
-							?>
-						</li>
-					<?php 
-					} 
-					?>
-				</ul>
-			</div>
-		</div>
+					</ul>
+				</div>
+				<div class="cfts-round-1"></div>
+				<div class="cfts-round-2"></div>
+				<div class="cfts-round-3"></div>
+				<div class="cfts-round-4"></div>
+				<div class="cfts-round-5"></div>
+			</div><!--/cfts-options-->
+		</div><!--/cfts-select-->
 	</div>
 	<script type="text/javascript">
 		jQuery("#page_template").hide();
