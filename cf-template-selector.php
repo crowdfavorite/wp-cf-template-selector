@@ -146,9 +146,15 @@ function cfts_admin_css() {
 		left: 0;
 		padding: 12px 0 12px 12px;
 		position: absolute;
-		top: 50.0%;
-		width: 615px;
+		top: 50%;
+		width: 614px;
 		z-index: 101;
+	}
+	.cfts-select .cfts-options.has-1 {
+		width: 230px;
+	}
+	.cfts-select .cfts-options.has-2 {
+		width: 422px;
 	}
 	.cfts-select .cfts-options-inside,
 	.cfts-select .cfts-options .cfts-round-1,
@@ -323,10 +329,25 @@ function cfts_page_template_selector() {
 				}
 				?>
 			</div>
-			<div class="cfts-options">
+			<?php 
+			// Set class depending on number of items
+			$num_of_items = count($template_info);
+			switch ($num_of_items) {
+				case 1:
+				case 2:
+					$gallery_classname = ' has-' . $num_of_items;
+					break;
+				default:
+					$gallery_classname = ' has-many';
+					break;
+			}
+			 ?>
+			<div class="cfts-options<?php echo $gallery_classname; ?>">
 				<div class="cfts-options-inside">
 					<ul>
-						<?php 
+						<?php
+						
+						// Output items
 						foreach ($template_info as $filename => $template) { 
 							$selected_class = '';
 							if ($selected_template == $filename) {
