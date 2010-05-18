@@ -130,7 +130,7 @@ function cfts_admin_css() {
 	 * @affected IE7
 	 */
 	#side-info-column {
-		z-index: 2;
+		z-index: 100;
 	}
 	
 	.cfts-select {
