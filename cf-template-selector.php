@@ -63,11 +63,11 @@ function cfts_admin_js() {
 				"margin-left": "-" + offsetX + "px"
 			});
 		}
-		_popover.toggle = function() {
+		_popover.toggle = function(closeAlways) {
 			var $popover = $(_popover.settings.selector);
 			var $popoverVisible = $(_popover.settings.selector + ":visible");
 			
-			if ($popoverVisible.length > 0) {
+			if (closeAlways == true || $popoverVisible.length > 0) {
 				// Hide if visible
 				$popover.fadeOut('fast');
 			} else {
@@ -77,8 +77,13 @@ function cfts_admin_js() {
 		}
 		
 		$(function() {
+			$("body").click(function(){
+				_popover.toggle(true);
+			});
+			
 			$(".cfts-select .cfts-value").click(function(){
 				_popover.toggle();
+				return false;
 			});
 			
 			_popover.align();
@@ -110,6 +115,7 @@ function cfts_admin_js() {
 				$(".cfts-option").removeClass("cfts-selected");
 				_this.addClass("cfts-selected");
 				_popover.toggle();
+				return false;
 			});
 		});
 	})(jQuery);
