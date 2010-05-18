@@ -124,6 +124,15 @@ if (is_admin()) {
 function cfts_admin_css() {
 	header('Content-type: text/css');
 	?>
+	/**
+	 * @bugfix Important z-index fix for WP Sidebar
+	 * Without this, popover appears beneath other items.
+	 * @affected IE7
+	 */
+	#side-info-column {
+		z-index: 2;
+	}
+	
 	.cfts-select {
 		display: block;
 		position: relative;
