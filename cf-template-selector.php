@@ -153,7 +153,7 @@ function cfts_admin_css() {
 		position: relative;
 		z-index: 100;
 	}
-	.cfts-hndl {
+	.cfts-select .cfts-hndl {
 		background: url(<?php echo CFTS_URL; ?>img/gray-grad.png) repeat-x rgb(223, 223, 223);
 		-moz-border-radius-topright: 6px; /* FF1+ */
 		-webkit-border-top-right-radius: 6px; /* Saf3+, Chrome */
@@ -167,8 +167,12 @@ function cfts_admin_css() {
 		font-size: 12px;
 		font-weight: bold;
 		line-height: 1;
+		left: 0;
+		margin: 7px 11px 7px 7px;
 		padding: 7px 9px;
-		position: relative;
+		position: absolute;
+		right: 0;
+		top: 0;
 		text-shadow: 0 1px 0 rgb(255, 255, 255);
 		z-index: 3;
 	}
@@ -278,6 +282,7 @@ function cfts_admin_css() {
 	.cfts-select .cfts-options ul {
 		background: #fff;
 		max-height: 384px;
+		border-top: 26px solid #fff;
 		overflow: auto;
 	}
 	.cfts-select .cfts-option {
@@ -327,6 +332,9 @@ function cfts_admin_css() {
 		background-position: right center;
 		padding-left: 0;
 		padding-right: 12px;
+	}
+	#post-body .cfts-select .cfts-hndl {
+		margin: 7px 7px 7px 11px;
 	}
 	
 	/**
@@ -431,7 +439,7 @@ function cfts_page_template_selector() {
 					break;
 			}
 			 ?>
-			<div class="cfts-options<?php echo $gallery_classname; ?>">
+			<div class="cfts-options<?php echo $gallery_classname; ?>" style="display: none;">
 				<div class="cfts-options-inside">
 					<div class="cfts-options-inside-1">
 						<strong class="cfts-hndl">Page Templates</strong>
