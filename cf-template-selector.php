@@ -129,6 +129,26 @@ function cfts_admin_css() {
 		position: relative;
 		z-index: 100;
 	}
+	.cfts-hndl {
+		background: url(<?php echo CFTS_URL; ?>img/gray-grad.png) repeat-x rgb(223, 223, 223);
+		-moz-border-radius-topright: 6px; /* FF1+ */
+		-webkit-border-top-right-radius: 6px; /* Saf3+, Chrome */
+		-khtml-border-top-right-radius: 6px; /* Konqueror */
+		border-top-right-radius: 6px; /* Standard. IE9 */
+		-moz-border-radius-topleft: 6px; /* FF1+ */
+		-webkit-border-top-left-radius: 6px; /* Saf3+, Chrome */
+		-khtml-border-top-left-radius: 6px; /* Konqueror */
+		border-top-left-radius: 6px; /* Standard. IE9 */
+		display: block;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 1;
+		margin: -4px -4px 4px;
+		padding: 7px 9px;
+		position: relative;
+		text-shadow: 0 1px 0 rgb(255, 255, 255);
+		z-index: 3;
+	}
 	.cfts-select .cfts-value {
 		background: #fff url(<?php echo CFTS_URL; ?>img/pencil.png) no-repeat right top;
 		border: 1px solid #dfdfdf;
@@ -228,7 +248,7 @@ function cfts_admin_css() {
 	}
 	.cfts-select .cfts-options-inside {
 		background-position: right center;
-		padding-right: 18px;
+		padding-right: 16px;
 	}
 	.cfts-select .cfts-options ul {
 		background: #fff;
@@ -359,6 +379,7 @@ function cfts_page_template_selector() {
 			 ?>
 			<div class="cfts-options<?php echo $gallery_classname; ?>" style="display: none;">
 				<div class="cfts-options-inside">
+					<strong class="cfts-hndl">Page Templates</strong>
 					<ul>
 						<?php
 						
