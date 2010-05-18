@@ -65,7 +65,7 @@ function cfts_admin_js() {
 		}
 		_popover.toggle = function() {
 			var $popover = $(_popover.settings.selector);
-			var $popoverVisible = $(".cfts-select .cfts-options:visible");
+			var $popoverVisible = $(_popover.settings.selector + ":visible");
 			
 			if ($popoverVisible.length > 0) {
 				// Hide if visible
@@ -141,6 +141,9 @@ function cfts_admin_css() {
 		overflow: hidden;
 		padding: 6px 28px 6px 6px;
 		z-index: 100;
+	}
+	.cfts-select .cfts-value:hover {
+		border-color: #95c7c7;
 	}
 	.cfts-select .cfts-options {
 		left: 0;
@@ -249,7 +252,7 @@ function cfts_admin_css() {
 		zoom: 1;
 		*display: inline;
 
-		margin: 0;
+		margin: 0 0 5px;
 		overflow: hidden;
 		padding: 5px;
 		vertical-align: top;
@@ -266,7 +269,7 @@ function cfts_admin_css() {
 		width: 180px;
 	}
 	.cfts-select .cfts-option:hover img.cfts-screenshot {
-		border-color: #56A7E5;
+		border-color: #95c7c7;
 	}
 	.cfts-select .cfts-name {
 		display: block;
