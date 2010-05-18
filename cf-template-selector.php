@@ -79,10 +79,9 @@ function cfts_admin_js() {
 				// Hide if visible
 				$popover.fadeOut('fast');
 			} else {
-				// Set alignment
-				_popover.align();
-				
 				// Show if hidden
+				// Set alignment before showing
+				_popover.align();
 				$popover.fadeIn('fast');
 			}
 		}
@@ -197,13 +196,6 @@ function cfts_admin_css() {
 		width: 624px;
 		z-index: 101;
 	}
-	/**
-	 * If in main column...
-	 */
-	#post-body .cfts-select .cfts-options {
-		left: auto;
-		right: 0;
-	}
 	/* Logic for widths depending on presence of scrollbar, etc */
 	.cfts-select .cfts-options.has-1 {
 		width: 220px;
@@ -311,6 +303,35 @@ function cfts_admin_css() {
 		vertical-align: top;
 		width: 182px;
 	}
+	/**
+	 * If in main column...
+	 */
+	#post-body .cfts-select .cfts-options {
+		left: auto;
+		right: 0;
+	}
+	#post-body .cfts-select .cfts-options-inside,
+	#post-body .cfts-select .cfts-options-inside-1,
+	#post-body .cfts-select .cfts-options .cfts-round-1,
+	#post-body .cfts-select .cfts-options .cfts-round-2,
+	#post-body .cfts-select .cfts-options .cfts-round-3,
+	#post-body .cfts-select .cfts-options .cfts-round-4 {
+		background-image: url(<?php echo CFTS_URL; ?>img/popover-right.png);
+	}
+	#post-body .cfts-select .cfts-options-inside {
+		background-position: left center;
+		padding-left: 16px;
+		padding-right: 0;
+	}
+	#post-body .cfts-select .cfts-options-inside-1 {
+		background-position: right center;
+		padding-left: 0;
+		padding-right: 12px;
+	}
+	
+	/**
+	 * Items
+	 */
 	.cfts-select .cfts-option.cfts-selected {
 		background: #eaf2fa;
 	}
