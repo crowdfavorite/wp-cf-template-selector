@@ -107,11 +107,10 @@ function cfts_admin_js() {
 				$("#page_template").val(file);
 				$("#cfts-selected-name").html(name);
 				if (screenshot != undefined) {
-					$("#cfts-selected-screenshot").show();
 					$("#cfts-selected-screenshot").attr('src', screenshot);
 				}
 				else {
-					$("#cfts-selected-screenshot").hide();
+					$("#cfts-selected-screenshot").attr('src', '<?php echo CFTS_URL; ?>img/default.png');
 				}
 				if (description != null) {
 					$("#cfts-selected-description").html(description);
