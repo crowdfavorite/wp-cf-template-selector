@@ -75,12 +75,13 @@ function cfts_admin_js() {
 		}
 		_popover.toggle = function(closeAlways) {
 			var $popover = $(_popover.settings.selector);
-			var $popoverVisible = $(_popover.settings.selector + ":visible");
-			
-			if (closeAlways == true || $popoverVisible.length > 0) {
+			if (closeAlways == true || $(_popover.settings.selector + ":visible").length > 0) {
 				// Hide if visible
 				$popover.fadeOut('fast');
 			} else {
+				// Set alignment
+				_popover.align();
+				
 				// Show if hidden
 				$popover.fadeIn('fast');
 			}
@@ -95,8 +96,6 @@ function cfts_admin_js() {
 				_popover.toggle();
 				return false;
 			});
-			
-			_popover.align();
 			
 			$(".cfts-select .cfts-option").live('click', function() {
 				var _this = $(this);
