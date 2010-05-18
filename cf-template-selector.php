@@ -149,7 +149,7 @@ function cfts_admin_css() {
 	
 	.cfts-select {
 		display: block;
-		max-width: 266px;
+		width: 196px;
 		position: relative;
 		z-index: 100;
 	}
@@ -177,7 +177,6 @@ function cfts_admin_css() {
 		z-index: 3;
 	}
 	.cfts-select .cfts-value {
-		background: #fff url(<?php echo CFTS_URL; ?>img/pencil.png) no-repeat right top;
 		border: 1px solid #dfdfdf;
 		-moz-border-radius: 4px; /* FF1+ */
 		-webkit-border-radius: 4px; /* Saf3+, Chrome */
@@ -186,8 +185,18 @@ function cfts_admin_css() {
 		cursor: pointer;
 		display: block;
 		overflow: hidden;
-		padding: 6px 28px 6px 6px;
+		padding: 6px;
+		position: relative;
 		z-index: 100;
+	}
+	.cfts-select .cfts-value .edit {
+		background: url(<?php echo CFTS_URL; ?>img/pencil.png) no-repeat right top;
+		display: block;
+		height: 28px;
+		position: absolute;
+		right: -3px;
+		top: -3px;
+		width: 28px;
 	}
 	.cfts-select .cfts-value:hover {
 		border-color: #95c7c7;
@@ -401,6 +410,7 @@ function cfts_page_template_selector() {
 	<div id="cfts-page-template-selector-area" style="display:none;">
 		<div id="cfts-page-template-selector" class="cfts-select">
 			<div id="cfts-selected" class="cfts-value">
+				<span class="edit"></span>
 				<?php
 				if (!empty($selected['screenshot'])) {
 					echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot" />';
