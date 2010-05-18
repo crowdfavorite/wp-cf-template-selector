@@ -260,7 +260,7 @@ function cfts_admin_css() {
 	}
 	.cfts-select img.cfts-screenshot {
 		border: 1px solid #ddd;
-		float: left;
+		display: block;
 		height: 120px;
 		margin: 0 0 5px;
 		width: 180px;
@@ -354,7 +354,7 @@ function cfts_page_template_selector() {
 					break;
 			}
 			 ?>
-			<div class="cfts-options<?php echo $gallery_classname; ?>">
+			<div class="cfts-options<?php echo $gallery_classname; ?>" style="display: none;">
 				<div class="cfts-options-inside">
 					<ul>
 						<?php
