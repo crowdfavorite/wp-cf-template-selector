@@ -205,24 +205,24 @@ function cfts_admin_css() {
 		padding: 12px 0 12px;
 		position: absolute;
 		top: 50%;
-		width: 624px;
+		width: 636px;
 		z-index: 101;
 	}
 	/* Logic for widths depending on presence of scrollbar, etc */
 	.cfts-select .cfts-options.has-1 {
-		width: 220px;
+		width: 224px;
 	}
 	.cfts-select .cfts-options.has-2 {
-		width: 412px;
+		width: 420px;
 	}
 	.cfts-select .cfts-options.has-3,
 	.cfts-select .cfts-options.has-4,
 	.cfts-select .cfts-options.has-5,
 	.cfts-select .cfts-options.has-6 {
-		width: 604px;
+		width: 616px;
 	}
 	
-	/* Popover roundies */
+	/* Popover Roundies */
 	.cfts-select .cfts-options-inside,
 	.cfts-select .cfts-options-inside-1,
 	.cfts-select .cfts-options .cfts-round-1,
@@ -244,9 +244,7 @@ function cfts_admin_css() {
 		height: 12px;
 		width: 50%;	
 	}
-	/**
-	 * Top
-	 */
+	/* Roundies Top */
 	.cfts-select .cfts-options .cfts-round-1,
 	.cfts-select .cfts-options .cfts-round-2 {
 		top: 0;
@@ -259,9 +257,7 @@ function cfts_admin_css() {
 		background-position: right 0;
 		right: 0;
 	}
-	/**
-	 * Bottom
-	 */
+	/* Roundies Bottom */
 	.cfts-select .cfts-options .cfts-round-3,
 	.cfts-select .cfts-options .cfts-round-4 {
 		bottom: 0;
@@ -274,10 +270,7 @@ function cfts_admin_css() {
 		background-position: right bottom;
 		right: 0;
 	}
-	
-	/**
-	 * Inside (sides)
-	 */
+	/* Roundies Inside (sides) */
 	.cfts-select .cfts-options-inside {
 		background-position: right center;
 		padding-right: 16px;
@@ -293,7 +286,12 @@ function cfts_admin_css() {
 		border-top: 26px solid #fff;
 		overflow: auto;
 	}
+	
+	/**
+	 * Items
+	 */
 	.cfts-select .cfts-option {
+		border: 1px solid #fff;
 		-moz-border-radius: 4px; /* FF1+ */
 		-webkit-border-radius: 4px; /* Saf3+, Chrome */
 		-khtml-border-radius: 4px; /* Konqueror */
@@ -310,12 +308,39 @@ function cfts_admin_css() {
 		zoom: 1;
 		*display: inline;
 
-		margin: 0 0 5px;
+		margin: 2px;
 		overflow: hidden;
-		padding: 5px;
+		padding: 4px;
 		vertical-align: top;
 		width: 182px;
 	}
+	.cfts-select .cfts-option:hover {
+		border-color: #95c7c7;
+	}
+	.cfts-select .cfts-option.cfts-selected {
+		background: #eaf2fa;
+	}
+	.cfts-select img.cfts-screenshot {
+		border: 1px solid #ddd;
+		display: block;
+		height: 120px;
+		margin: 0 0 5px;
+		width: 180px;
+	}
+	.cfts-select .cfts-name {
+		display: block;
+		font-weight: bold;
+		font-size: 12px;
+		line-height: 14px !important;
+		margin: 0 3px 2px;
+	}
+	.cfts-select .cfts-description {
+		color: #777;
+		font-size: 11px;
+		line-height: 14px !important;
+		margin: 0 3px;
+	}
+	
 	/**
 	 * If in main column...
 	 */
@@ -344,36 +369,7 @@ function cfts_admin_css() {
 	#post-body .cfts-select .cfts-hndl {
 		margin: 7px 7px 7px 11px;
 	}
-	
-	/**
-	 * Items
-	 */
-	.cfts-select .cfts-option.cfts-selected {
-		background: #eaf2fa;
-	}
-	.cfts-select img.cfts-screenshot {
-		border: 1px solid #ddd;
-		display: block;
-		height: 120px;
-		margin: 0 0 5px;
-		width: 180px;
-	}
-	.cfts-select .cfts-option:hover img.cfts-screenshot {
-		border-color: #95c7c7;
-	}
-	.cfts-select .cfts-name {
-		display: block;
-		font-weight: bold;
-		font-size: 12px;
-		line-height: 14px !important;
-		margin: 0 3px 2px;
-	}
-	.cfts-select .cfts-description {
-		color: #777;
-		font-size: 11px;
-		line-height: 14px !important;
-		margin: 0 3px;
-	}
+
 	<?php
 	die();
 }
