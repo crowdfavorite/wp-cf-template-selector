@@ -28,7 +28,7 @@ Optional. A short description of the page template. HTML can be used, but be car
 
 ### Screenshot
 
-Optional, strongly suggested. A relative path to the screenshot file.
+Optional, strongly recommended. A relative path to the screenshot file.
 
 - The url to the theme directory is automatically prepended to your relative path and has a trailing slash (ie, don't add a slash at the beginning of your relative path).
 - Screenshots must be `180px` wide by `120px` high.
