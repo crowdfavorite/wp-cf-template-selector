@@ -381,13 +381,6 @@ if (is_admin()) {
 
 ## Page Display Functionality
 
-/**
- * Function to display individual items
- */
-function _cfts_page_template_selector_item($title, $description, $image_url) {
-	
-}
-
 function cfts_page_template_selector() {
 	global $post;
 	$template_info = cfts_page_template_info();
