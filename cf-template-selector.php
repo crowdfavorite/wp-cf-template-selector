@@ -57,7 +57,7 @@ function cfts_admin_js() {
 		_popover.align = function() {
 			var $popover = $(_popover.settings.selector);
 			var offsetX = $popover.outerWidth() - 9;
-			var offsetY = $popover.outerHeight() / 2;		
+			var offsetY = $popover.outerHeight() / 2;
 			
 			if ($popover.parents("#post-body").length > 0) {
 				cssToSet = {
