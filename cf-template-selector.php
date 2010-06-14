@@ -401,7 +401,7 @@ function cfts_page_template_selector() {
 				<span class="edit"></span>
 				<?php
 				if (!empty($selected['screenshot'])) {
-					echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot" />';
+					echo '<img src="'.trailingslashit(get_bloginfo('template_url')).$selected['screenshot'].'" id="cfts-selected-screenshot" class="cfts-screenshot" />';
 				}
 				else {
 					echo '<img src="'.CFTS_URL.'img/default.png" id="cfts-selected-screenshot" class="cfts-screenshot" />';
@@ -455,7 +455,7 @@ function cfts_page_template_selector() {
 									<input type="hidden" id="cfts-option-file-<?php echo $file; ?>" value="<?php echo $filename; ?>" />
 									<?php
 									if (!empty($template['screenshot'])) {
-										echo '<img src="'.trailingslashit(get_stylesheet_directory_uri()).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot" />';
+										echo '<img src="'.trailingslashit(get_bloginfo('template_url')).$template['screenshot'].'" id="cfts-option-screenshot-'.$file.'" class="cfts-screenshot" />';
 									} else {
 										echo '<img src="'.CFTS_URL.'img/default.png" class="cfts-screenshot" />';
 									}
