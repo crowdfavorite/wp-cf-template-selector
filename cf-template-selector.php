@@ -11,38 +11,23 @@ Author URI: http://crowdfavorite.com
 // ini_set('display_errors', '1'); ini_set('error_reporting', E_ALL);
 
 ## Constants
-define('CFTS_VERSION', '1.0');
-define('CFTS_DIR', trailingslashit(realpath(dirname(__FILE__))));
-define('CFTS_DIR_NAME', apply_filters('cfts_dir_name', 'cf-template-selector'));
-// Used for CSS
-define('CFTS_URL', trailingslashit(content_url('/plugins/' . CFTS_DIR_NAME)) );
+define('CFTS_VERSION', '1.0'); // The shouldn't be filtered, so he's outside of init action
 
-if (!defined('PLUGINDIR')) {
-	define('PLUGINDIR','wp-content/plugins');
+/**
+ * Sets up filterable defines
+ **/
+function cfts_constant_defines() {
+	define('CFTS_DIR', trailingslashit(realpath(dirname(__FILE__))));
+	define('CFTS_DIR_NAME', apply_filters('cfts_dir_name', 'cf-template-selector'));
+	
+	// Used for CSS
+	define('CFTS_URL', apply_filters('cfts_url', trailingslashit(content_url('/plugins/' . CFTS_DIR_NAME))));
 }
+add_action('init', 'cfts_constant_defines');
 
 ## Includes
 
 load_plugin_textdomain('cfts');
-
-## Init Functionality
-
-function cfts_resources() {
-	if (!empty($_GET['cf_action'])) {
-		switch ($_GET['cf_action']) {
-			case 'cfts_admin_js':
-				cfts_admin_js();
-				die();
-				break;
-			case 'cfts_admin_css':
-				cfts_admin_css();
-				die();
-				break;
-		}
-	}
-}
-add_action('init', 'cfts_resources', 1);
-
 
 ## JS/CSS
 
@@ -131,7 +116,8 @@ function cfts_admin_js() {
 }
 
 if (is_admin()) {
-	wp_enqueue_script('cfts_admin_js', admin_url('?cf_action=cfts_admin_js'), array('jquery'), CFTS_VERSION);
+	wp_enqueue_script('cfts_admin_js', admin_url('admin-ajax.php?action=cfts_admin_js'), array('jquery'), CFTS_VERSION);
+	add_action('wp_ajax_cfts_admin_js', 'cfts_admin_js');
 }
 
 function cfts_admin_css() {
@@ -375,7 +361,8 @@ function cfts_admin_css() {
 }
 
 if (is_admin()) {
-	wp_enqueue_style('cfts_admin_css', admin_url('?cf_action=cfts_admin_css'), array(), CFTS_VERSION, 'screen');
+	wp_enqueue_style('cfts_admin_css', admin_url('admin-ajax.php?action=cfts_admin_css'), array(), CFTS_VERSION, 'screen');
+	add_action('wp_ajax_cfts_admin_css', 'cfts_admin_css');
 }
 
 
