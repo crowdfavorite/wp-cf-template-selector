@@ -1,6 +1,6 @@
 # CF Template Selector
 
-## trunk
+## 1.0.1
 
 - Removed request handler in favor of `admin-ajax.php`-based JS and CSS resource handling
 - Moved constant defines into `init` action so the img URLs are filterable
