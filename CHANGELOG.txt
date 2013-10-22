@@ -1,5 +1,9 @@
 # CF Template Selector
 
+## 1.0.2
+
+- Moved enqueue of JS and CSS to actions instead of during file parse
+
 ## 1.0.1
 
 - Removed request handler in favor of `admin-ajax.php`-based JS and CSS resource handling
