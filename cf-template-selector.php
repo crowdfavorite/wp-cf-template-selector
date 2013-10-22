@@ -3,7 +3,7 @@
 Plugin Name: CF Template Selector
 Plugin URI: http://crowdfavorite.com
 Description: Custom Template Selector for the Page edit screen.  Adds the ability to see screenshots and descriptions of page template files.
-Version: 1.0
+Version: 1.0.2
 Author: Crowd Favorite
 Author URI: http://crowdfavorite.com
 */
@@ -11,7 +11,7 @@ Author URI: http://crowdfavorite.com
 // ini_set('display_errors', '1'); ini_set('error_reporting', E_ALL);
 
 ## Constants
-define('CFTS_VERSION', '1.0'); // The shouldn't be filtered, so he's outside of init action
+define('CFTS_VERSION', '1.0.2'); // The shouldn't be filtered, so he's outside of init action
 
 /**
  * Sets up filterable defines
