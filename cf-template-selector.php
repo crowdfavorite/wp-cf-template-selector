@@ -32,7 +32,7 @@ load_plugin_textdomain('cfts');
 ## JS/CSS
 
 function cfts_admin_js() {
-	header('Content-type: text/javascript');
+	header('Content-type: application/javascript');
 	?>
 	;(function($) {
 		var _popover = {};
@@ -115,10 +115,11 @@ function cfts_admin_js() {
 	die();
 }
 
-if (is_admin()) {
+function cfts_enqueue_script() {
 	wp_enqueue_script('cfts_admin_js', admin_url('admin-ajax.php?action=cfts_admin_js'), array('jquery'), CFTS_VERSION);
-	add_action('wp_ajax_cfts_admin_js', 'cfts_admin_js');
 }
+add_action('admin_enqueue_scripts', 'cfts_enqueue_script');
+add_action('wp_ajax_cfts_admin_js', 'cfts_admin_js');
 
 function cfts_admin_css() {
 	header('Content-type: text/css');
@@ -360,10 +361,11 @@ function cfts_admin_css() {
 	die();
 }
 
-if (is_admin()) {
+function cfts_enqueue_styles() {
 	wp_enqueue_style('cfts_admin_css', admin_url('admin-ajax.php?action=cfts_admin_css'), array(), CFTS_VERSION, 'screen');
-	add_action('wp_ajax_cfts_admin_css', 'cfts_admin_css');
 }
+add_action('admin_enqueue_scripts', 'cfts_enqueue_styles');
+add_action('wp_ajax_cfts_admin_css', 'cfts_admin_css');
 
 
 ## Page Display Functionality
